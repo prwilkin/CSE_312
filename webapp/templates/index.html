@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index/index.css') }}" >
 </head>
 <body>
-<h1>Welcome to this webapp</h1>
+    <h1>Welcome to this webapp of the Algorithm Alchemists</h1>
+    <p id="time"></p>
+    <p id="latLong"></p>
+    <img src="{{ url_for('static', filename='index/4wizardsComputer.png') }}">
+    <script src="{{ url_for('static', filename='index/index.js') }}"></script>
 </body>
 </html>
