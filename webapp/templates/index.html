@@ -13,11 +13,17 @@
 <div id="topheader">
     <h1>Welcome to the webapp of the Algorithm Alchemists</h1>
     <form id="login">
-        <label for="user">Username:</label>
-        <input type="text" id="username" value="" placeholder="Enter Username"><br><br>
-        <label for="user">Password:</label>
-        <input type="text" id="password" value=""placeholder="Enter Password"><br>
-        <input type="button" value="Submit" onclick="getLogin()">
+        <button id="loginButton" type="button" value="Login" onclick="displayLogin('login')">Login</button>
+        <button id="registerButton" type="button" value="Register" onclick="displayLogin('registration')">Register</button>
+
+        <label style="display: none;" value="username" htmlFor="user" id="UsernameLabel"></label>
+        <input style="display: none;" type="text"  value="" placeholder="Enter Username" id="username"/>
+        <label style="display: none;" htmlFor="user" value="Password:" id="PasswordLabel"></label>
+        <input type="password" value="" placeholder="Enter Password" style="display: none" id="password"/>
+        <label style="display: none;" htmlFor="user" value="Confirm" id="ConfirmPasswordLabel"></label>
+        <input type="password" value="" placeholder="Confirm Password" style="display: none" id="password2"/>
+        <button type="button" value="Submit" onclick="getLogin()" style="display: none" id="SubmitButton">Submit</button>
+
     </form>
 </div>
 <div id="main-content">
