@@ -1,9 +1,75 @@
+:root{
+  --orange: #BD632F;
+--tan: #D8C99B;
+--teal: #273E47;
+  --light-orange: #D8973C;
+
+}
+
+
 body {
-  background-color: powderblue;
+  background-color: var(--tan);
+  scrollbar-color: var(--orange) var(--light-orange);
+
 }
 h1 {
-  color: blue;
+  font-family: "Inconsolata", monospace;
+  color: var(--teal);
+
 }
 p {
-  color: red;
+  font-family: "Inconsolata", monospace;
+  color: var(--orange);
+  text-align: center;
+}
+#login {
+  font-family: "Inconsolata", monospace;
+  color: var(--orange);
+  justify-self: right;
+}
+#topheader{
+  width:100%;
+  display:flex;
+  justify-content: space-between
+
+}
+
+#body-content{
+  display:block;
+}
+#login input {
+  font-family: "Inconsolata", monospace;
+  background-color: var(--light-orange);
+  border: 2px solid var(--orange);
+  border-radius: 10px;
+}
+
+#main-content{
+  display:grid;
+  align-content: center;
+  justify-content: center;
+
+}
+
+#wizard-img{
+ overflow:hidden;
+  margin:auto;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--tan);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--light-orange);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--orange);
 }

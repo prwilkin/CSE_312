@@ -13,6 +13,16 @@ function displayLocation() {
         document.getElementById('latLong').textContent = `Your Location: Latitude: ${lat}, Longitude: ${lon}`;
     });
 }
+//sends out a post request with username and pw info
+//auth just needs a function to recieve it, if you run the page + go into network you can read the request
+function getLogin(){
+    let username = document.getElementById("username").value
+    let password = document.getElementById("password").value
+    const request = new XMLHttpRequest();
+    let messageJSON = {"username": username,"password":password};
+    request.open("POST", "/");
+    request.send(JSON.stringify(messageJSON));
+}
 
 // set time every second
 setInterval(displayTime, 1000);
