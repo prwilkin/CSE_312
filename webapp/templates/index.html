@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="{{ url_for('static', filename='index/index.js') }}"></script>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Algorithm Alchemists!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='index/index.css') }}" >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Welcome to this webapp of the Algorithm Alchemists</h1>
+<div id="topheader">
+    <h1>Welcome to the webapp of the Algorithm Alchemists</h1>
+    <form id="login">
+        <label for="user">Username:</label>
+        <input type="text" id="username" value="" placeholder="Enter Username"><br><br>
+        <label for="user">Password:</label>
+        <input type="text" id="password" value=""placeholder="Enter Password"><br>
+        <input type="button" value="Submit" onclick="getLogin()">
+    </form>
+</div>
+<div id="main-content">
     <p id="time"></p>
     <p id="latLong"></p>
-    <img src="{{ url_for('static', filename='index/4wizardsComputer.png') }}">
-    <script src="{{ url_for('static', filename='index/index.js') }}"></script>
+    <img id="wizard-img" style="width:30%;height:auto" src="{{ url_for('static', filename='index/4wizardsComputer.png') }}">
+</div>
 </body>
 </html>
