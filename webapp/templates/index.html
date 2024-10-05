@@ -16,14 +16,21 @@
         <button id="loginButton" type="button" value="Login" onclick="displayLogin('login')">Login</button>
         <button id="registerButton" type="button" value="Register" onclick="displayLogin('registration')">Register</button>
 
-        <label style="display: none;" value="username" htmlFor="user" id="UsernameLabel"></label>
-        <input style="display: none;" type="text"  value="" placeholder="Enter Username" id="username"/>
-        <label style="display: none;" htmlFor="user" value="Password:" id="PasswordLabel"></label>
-        <input type="password" value="" placeholder="Enter Password" style="display: none" id="password"/>
-        <label style="display: none;" htmlFor="user" value="Confirm" id="ConfirmPasswordLabel"></label>
-        <input type="password" value="" placeholder="Confirm Password" style="display: none" id="password2"/>
-        <button type="button" value="Submit" onclick="getLogin()" style="display: none" id="SubmitButton">Submit</button>
+        <!-- Username -->
+        <label style="display: none;" value="username" for="username" id="UsernameLabel"></label>
+        <input style="display: none;" type="text" value="" placeholder="Enter Username" id="username" required/>
 
+        <!-- Password -->
+        <label style="display: none;" for="password" id="PasswordLabel"></label>
+        <input type="password" value="" placeholder="Enter Password" style="display: none" id="password" required/>
+
+        <!-- Confirm Password -->
+        <label style="display: none;" for="password2" id="ConfirmPasswordLabel"></label>
+        <input type="password" value="" placeholder="Confirm Password" style="display: none" id="password2" />
+
+        <!-- Submit -->
+        <button type="button" value="Submit" onclick="getLogin()" style="display: none" id="SubmitButton">Submit</button>
+        
     </form>
 </div>
 <div id="main-content">

@@ -70,16 +70,55 @@ function displayLogin(formtype) {
 
 }
 
+// Function to handle form submission for registration
+// Registration Helper Function
+function registerUser(username, password, password2) {
+    // Check if passwords match
+    if (password !== password2) {
+        alert("Passwords do not match!");
+        return;
+    }
+
+    // Create the registration data
+    let data = {
+        username: username,
+        password: password,
+        password2: password2
+    };
+
+    // Make the POST request to register endpoint
+    fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert('Error: ' + data.error);
+        } else {
+            alert('Registration successful!');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    });
+}
+
 //sends out a post request with username and pw info
 //auth just needs a function to receive it, if you run the page + go into network you can read the request
 function getLogin() {
     let username = document.getElementById("username").value
     let password = document.getElementById("password").value
     let password2 = null;
+
     if (document.getElementById("password2").getAttribute("style")=="display: block;") {
          password2 = document.getElementById("password2").value
+         registerUser(username, password, password2)
     }
-
     const request = new XMLHttpRequest();
     let messageJSON;
 
