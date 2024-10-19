@@ -1,17 +1,22 @@
-import mimetypes
-import bcrypt
+import mimetypes, bcrypt, os
 from flask import Flask, render_template, request, jsonify, make_response, send_from_directory
+from flask.cli import load_dotenv
 from pymongo import MongoClient
 
 app = Flask(__name__)
 
 def connect_to_mongo():
     # MongoDB connection
-    client = MongoClient("mongodb://mongo:27017/")
-    db = client.mydatabase
-    return db
+    load_dotenv()
+    if os.environ.get('DOCKER_ENV'):
+        # print("Docker DB")
+        mongoHost = 'mongo'
+    else:
+        # print("Local DB")
+        mongoHost = 'localhost'
+    mongo = MongoClient(mongoHost)
+    return mongo.mydatabase
 
-db = connect_to_mongo()
 
 # This sets the No sniff for every request
 # I might add the content type here as well if the project structure grows
@@ -34,10 +39,12 @@ def custom_static(filename):
 def index():
     return render_template('index.html')
 
-users_collection = db.users
 
 @app.route('/register', methods=['POST'])
 def register():
+    db = connect_to_mongo()
+    users_collection = db.users
+
     username = request.json['username']
     password1 = request.json['password']
     password2 = request.json['password2']
