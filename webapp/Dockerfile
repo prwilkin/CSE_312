@@ -10,11 +10,11 @@ COPY .. /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Make port 5000 available to the world outside this container
-EXPOSE 5000
+EXPOSE 8080
 
 # Define environment variable
 ENV FLASK_APP=app.py
-
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
+RUN chmod +x /wait
+CMD /wait && python app.py
 # Run the Flask app
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
-
