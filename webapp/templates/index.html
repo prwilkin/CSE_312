@@ -30,13 +30,21 @@
 
         <!-- Submit -->
         <button type="button" value="Submit" onclick="getLogin()" style="display: none" id="SubmitButton">Submit</button>
+
+
+
         
     </form>
+</div>
+<div id ="spotifySearch">
+  <label value="search" for="search" id="search"></label>
+        <input id="searchInput" type="text" oninput="takeSong()" value="" placeholder="Search for a song!"/>
+     <!---   <button type="button" value="Submit"  id="SubmitButton">Submit</button>-->
 </div>
 <div id="main-content">
     <p id="time"></p>
     <p id="latLong"></p>
-    <img id="wizard-img" style="width:30%;height:auto" src="{{ url_for('static', filename='index/4wizardsComputer.png') }}">
+
 </div>
 </body>
 </html>

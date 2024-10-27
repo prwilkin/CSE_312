@@ -1,10 +1,26 @@
+document.getElementById("searchInput").addEventListener('input',takeSong);
+
 function displayTime() {
     const now = new Date();
     const timeString = now.toLocaleTimeString();
     document.getElementById('time').textContent = `Current Time: ${timeString}`;
 }
+function takeSong(){
+    console.log("query")
+    let searchQ = document.getElementById("searchInput").value
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = () => {
+    if (request.readyState === 4) {
+      giveSong(request.response);
+        }
+    };
+    request.open("GET", "/spotify/search?query="+searchQ);
+    request.send("")
 
-
+}
+function giveSong(request){
+    console.log(request)
+}
 function displayLocation() {
     // this might use permissions
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -90,23 +106,33 @@ function registerUser(username, password, password2) {
     fetch('/register', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*"
         },
         body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            alert('Error: ' + data.error);
-        } else {
-            alert('Registration successful!');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
-    });
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert('Error: ' + data.error);
+            } else {
+                alert('Registration successful!');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    const request = new XMLHttpRequest();
+    request.open("GET", "/spotify/login");
+    request.setRequestHeader("Content-Type","application/json")
+    request.setRequestHeader("Location","/spotify/login")
+    request.setRequestHeader("Access-Control-Allow-Origin","*")
+    request.send("")
+
+
 }
+
 
 //sends out a post request with username and pw info
 //auth just needs a function to receive it, if you run the page + go into network you can read the request
@@ -118,6 +144,7 @@ function getLogin() {
     if (document.getElementById("password2").getAttribute("style")=="display: block;") {
          password2 = document.getElementById("password2").value
          registerUser(username, password, password2)
+        return;
     }
     const request = new XMLHttpRequest();
     let messageJSON;
@@ -128,7 +155,10 @@ function getLogin() {
     else{
          messageJSON = {"username": username, "password": password};
     }
-    request.open("POST", "/");
+
+    request.open("POST", "/login");
+    request.setRequestHeader("Content-Type","application/json")
+
     request.send(JSON.stringify(messageJSON));
 }
 
