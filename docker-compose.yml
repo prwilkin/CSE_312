@@ -7,12 +7,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      WAIT_HOSTS: mongo:27017
-      MONGO_URI: mongodb://mongo:27017/mydatabase
+#      WAIT_HOSTS: mongo:27017
+#      MONGO_URI: mongodb://mongo:27017/mydatabase
       DOCKER_ENV: 1 #any value make it true
       CLIENT_ID: 35aedd448433476692a91887cd06e666
       CLIENT_SECRET: 6e312c190229470abfa68535d0480eb0
-
     volumes:
       - ./webapp:/app
     depends_on:
