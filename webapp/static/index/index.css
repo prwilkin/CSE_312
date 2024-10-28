@@ -12,11 +12,17 @@ body {
   scrollbar-color: var(--orange) var(--light-orange);
 
 }
+
 h1 {
   font-family: "Inconsolata", monospace;
   color: var(--teal);
-
 }
+
+h2 {
+  margin-top: 20px;
+  color: #333;
+}
+
 p {
   font-family: "Inconsolata", monospace;
   color: var(--orange);

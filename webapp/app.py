@@ -49,6 +49,7 @@ def custom_static(filename):
     # Set if it found one, not sure if always does, might make it throw error if it cant find type
     if mimetype:
         response.headers['Content-Type'] = mimetype
+    return response
 
 
 @app.route('/')
@@ -84,7 +85,8 @@ def register():
     # Store in the database
     users_collection.insert_one({
         "username": username,
-        "password": hashed_password
+        "password": hashed_password,
+        "spotify_login": spotify_login
     })
 
     return jsonify({"message": "Registration successful"}), 200
@@ -105,6 +107,8 @@ def login():
         hasher.update(token.encode("utf-8"))
         hashtoken = hasher.hexdigest()
         users_collection.update_one({"username": username}, {"$push": {"token": hashtoken}})
+        # Store the spotify login session if available
+        session['spotify_login'] = match.get("spotify_login")
         response = Response("Logged in successfully", 302)
         response.set_cookie("Token", hashtoken)
         return response
@@ -170,6 +174,46 @@ def get_song_by_id(id):
     song_data = get_spotify_track_by_id(id)
 
     return jsonify(song_data)
+
+
+# add a new post
+@app.route('/post', methods=['POST'])
+def add_post():
+    data = request.json
+    # Make each post have its unique id
+    post_id = str(uuid.uuid4())
+    db = connect_to_mongo()
+    posts_collection = db['posts']
+    post = {
+        "_id": post_id,
+        "song_id": data.get("ID"),
+        "caption": data.get("caption"),
+        "comments": []
+    }
+    posts_collection.insert_one(post)
+    return jsonify({"message": "Post added", "post_id": post_id}), 201
+
+# retrieve all the posts with comments
+@app.route('/posts', methods=['GET'])
+def get_posts():
+    db = connect_to_mongo()
+    posts_collection = db['posts']
+    posts = list(posts_collection.find({}, {'_id': 0}))
+    return jsonify(posts), 200
+
+# Route to add a comment to a specific post
+@app.route('/post/<post_id>/comment', methods=['POST'])
+def add_comment(post_id):
+    data = request.json
+    db = connect_to_mongo()
+    posts_collection = db['posts']
+    comment = {
+        # Make each comment have its own unique id
+        "comment_id": str(uuid.uuid4()),
+        "text": data.get("text")
+    }
+    posts_collection.update_one({"_id": post_id}, {"$push": {"comments": comment}})
+    return jsonify({"message": "Comment added"}), 200
 
 
 if __name__ == '__main__':

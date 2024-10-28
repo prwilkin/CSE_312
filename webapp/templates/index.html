@@ -30,11 +30,8 @@
 
         <!-- Submit -->
         <button type="button" value="Submit" onclick="getLogin()" style="display: none" id="SubmitButton">Submit</button>
-
-
-
-        
     </form>
+
 </div>
 <div id ="spotifySearch">
   <label value="search" for="search" id="search"></label>
@@ -46,5 +43,58 @@
     <p id="latLong"></p>
 
 </div>
+
+<h2>Posts</h2>
+<div id="posts-container"></div>
+
+<script>
+    // Function to fetch and display posts
+    async function fetchPosts() {
+        const response = await fetch('/posts');  // Call to backend to retrieve posts
+        const posts = await response.json();
+
+        const postsContainer = document.getElementById('posts-container');
+        postsContainer.innerHTML = '';  // Clear previous content to refresh posts
+
+        posts.forEach(post => {
+            const postDiv = document.createElement('div');
+            postDiv.classList.add('post');
+            postDiv.innerHTML = `
+                <h3>Song ID: ${post.song_id}</h3>
+                <p>${post.caption}</p>
+                <div>
+                    <h4>Comments:</h4>
+                    <ul>
+                        ${post.comments.map(comment => `<li>${comment.text}</li>`).join('')}
+                    </ul>
+                    <input type="text" placeholder="Add a comment" id="comment-${post._id}">
+                    <button onclick="addComment('${post._id}')">Submit</button>
+                </div>
+            `;
+            postsContainer.appendChild(postDiv);
+        });
+    }
+
+    // add a comment to a post
+    async function addComment(postId) {
+        const commentInput = document.getElementById(`comment-${postId}`);
+        const commentText = commentInput.value;
+
+        if (commentText) {
+            await fetch(`/post/${postId}/comment`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: commentText })
+            });
+
+            commentInput.value = '';  // Clear the input field
+            fetchPosts();  // Refresh the posts immediately to show the new comment
+        }
+    }
+    // Polling function to update posts every 5 seconds
+    setInterval(fetchPosts, 5000);  // Fetch posts every 5 seconds
+    fetchPosts();  // Initial fetch
+</script>
+
 </body>
 </html>
